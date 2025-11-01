@@ -2,6 +2,6 @@
 
 export LOG_LEVEL=INFO
 export AWS_DEFAULT_REGION=us-west-2
-export KNOWLEDGE_BASE_ID=
+export KNOWLEDGE_BASE_ID=QX2FOY95E8
 
-python main_agent.py
+python master_agent.py

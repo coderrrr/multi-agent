@@ -1,14 +1,8 @@
-import logging
-import os
+import random
 from strands import tool
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 @tool
 def get_user_risk_tolerance_level(user_id):
@@ -21,7 +15,9 @@ def get_user_risk_tolerance_level(user_id):
     Returns:
         Int level of risk tolerance.
     """
-    logger.info("Routed to User Profile Agent")
-    logger.info(f"executing get_user_risk_tolerance_ with {user_id=}")
-    risk_tolerance = 5
+    logger.info("[Routed to User Profile Agent...]")
+    logger.info(f"executing get_user_risk_tolerance with {user_id=}")
+    # 产生随机数 1-5    
+    risk_tolerance = random.randint(1, 5)
+
     return risk_tolerance    

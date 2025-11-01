@@ -1,17 +1,10 @@
-import logging
-import os
 from strands import Agent, tool
 from strands.models import BedrockModel
 from tools.web_search import web_search
 from tools.stock_data import stock_data_lookup
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 STOCK_ANALYSIS_SYSTEM_PROMPT = (
     """You are a seasoned stock investment analyst. For the given stock ticker, perform the following analysis in sequence:
@@ -61,7 +54,7 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
     formatted_query = f"Analyze this stock: {stock} for user risk tolerance level: {user_risk_tolerance_level}."
 
     try:
-        logger.info("Routed to Stock Analysis Agent")
+        logger.info("[Routed to Stock Analysis Agent...]")
         logger.info(f"formatted_query: {formatted_query} ")
 
         agent = Agent(

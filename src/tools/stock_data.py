@@ -1,17 +1,9 @@
 import json
-import logging
-import os
 import yfinance as yf
-
 from strands import tool
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 @tool
 def stock_data_lookup(ticker):

@@ -1,15 +1,8 @@
-import logging
-import os
 from strands import Agent, tool
 from strands.models import BedrockModel
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 GENERAL_ASSISTANT_SYSTEM_PROMPT = """
 You are GeneralAssist, a concise general knowledge assistant for topics outside specialized domains. Your key characteristics are:
@@ -62,7 +55,7 @@ def general_assistant(query: str) -> str:
     formatted_query = f"Answer this general knowledge question concisely, remembering to start by acknowledging that you are not an expert in this specific area: {query}"
 
     try:
-        logger.info("Routed to General Assistant Agent")
+        logger.info("[Routed to General Assistant Agent...]")
         logger.info(f"formatted_query: {formatted_query} ")
         agent = Agent(
             model=bedrock_model,

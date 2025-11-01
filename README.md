@@ -1,10 +1,10 @@
 # Strands Multi-Agent System
 
-企业级多智能体协作系统，基于 AWS Bedrock 和 Strands Agetns框架构建，提供股票分析、HR规章查询等专业服务。
+企业级多智能体协作系统，基于 AWS Strands Agents SDK 框架构建，提供股票分析、HR规章查询等专业服务。
 
 ## 功能特性
 
-- **主协调器**: 智能路由用户查询到相应的专业代理
+- **主协调器**: 智能路由用户查询到相应的专业 Agent
 - **股票分析代理**: 提供实时股票数据分析和投资建议
 - **HR规章代理**: 基于 AWS Bedrock Knowledge Base 的员工规章查询
 - **用户画像代理**: 获取用户风险承受能力等个人信息
@@ -39,7 +39,7 @@ pip install -r src/requirements.txt
 ```bash
 export LOG_LEVEL=INFO
 export AWS_DEFAULT_REGION=us-west-2
-export KNOWLEDGE_BASE_ID=your-knowledge-base-id  # HR知识库ID
+export KNOWLEDGE_BASE_ID=<your-knowledge-base-id>  # HR知识库ID
 ```
 
 ## 运行
@@ -80,8 +80,8 @@ src/
 
 ## 技术栈
 
-- **Strands**: 多智能体框架
-- **AWS Bedrock**: Claude 3.5 Sonnet 模型
+- **Strands Agents**: 多智能体框架
+- **AWS Bedrock**: Claude 4.5 Sonnet, Claude 4.5 Haiku 模型
 - **AWS Bedrock Knowledge Base**: 知识库检索增强生成
 - **boto3**: AWS SDK
 

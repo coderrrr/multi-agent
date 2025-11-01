@@ -8,8 +8,7 @@ A specialized Strands agent that is the orchestrator to utilize sub-agents and t
 
 """
 
-import logging
-import os
+import readline
 from strands import Agent
 from strands.models import BedrockModel
 
@@ -17,14 +16,9 @@ from agents.user_profile import get_user_risk_tolerance_level
 from agents.general_assist import general_assistant
 from agents.stock_analysis import stock_analysis
 from agents.hr_employee_regulation import hr_employee_regulation_search
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 # Create a BedrockModel
 bedrock_model = BedrockModel(

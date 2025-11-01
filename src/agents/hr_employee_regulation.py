@@ -1,15 +1,9 @@
-import logging
 import os
 import boto3
 from strands import tool
+from utils.logger import get_logger
 
-log_level = os.environ.get("LOG_LEVEL", "ERROR").strip().upper()
-logging.basicConfig(
-    level=log_level,
-    format="[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level)
+logger = get_logger(__name__)
 
 
 # Create Bedrock Agent Runtime client for Knowledge Base
@@ -17,7 +11,7 @@ bedrock_agent_client = boto3.client("bedrock-agent-runtime", region_name="us-wes
 
 # Knowledge Base configuration
 KNOWLEDGE_BASE_ID = os.environ.get("KNOWLEDGE_BASE_ID")
-MODEL_ARN = "arn:aws:bedrock:us-west-2:640037134104:inference-profile/us.anthropic.claude-sonnet-4-5-20250929-v1:0"
+MODEL_ARN = "arn:aws:bedrock:us-west-2:640037134104:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
 
 @tool
@@ -35,7 +29,7 @@ def hr_employee_regulation_search(query: str) -> str:
     # Format the query for the agent
     formatted_query = f"Use Chinese as output language, answer this knowledge question concisely: {query}"
     try:
-        logger.info("Routed to HR Employee Regulation Assistant")
+        logger.info("[Routed to HR Employee Regulation Assistant...]")
         logger.info(f"formatted_query: {formatted_query} ")
         response = bedrock_agent_client.retrieve_and_generate(
             input={"text": formatted_query},
