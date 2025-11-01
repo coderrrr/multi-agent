@@ -43,7 +43,7 @@ def hr_employee_regulation_search(query: str) -> str:
         )
 
         if "output" in response and "text" in response["output"]:
-            logger.info(f"Response: {response["output"]["text"]} ")
+            logger.debug(f"Response: {response["output"]["text"]} ")
             return response["output"]["text"]
         return ""
 

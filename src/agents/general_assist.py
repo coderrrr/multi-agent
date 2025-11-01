@@ -36,7 +36,7 @@ bedrock_model = BedrockModel(
     model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
     region_name="us-west-2",
     temperature=0.3,
-    streaming=False,
+    streaming=True,
 )
 
 @tool
@@ -66,10 +66,11 @@ def general_assistant(query: str) -> str:
         text_response = str(agent_response)
 
         if len(text_response) > 0:
-            logger.info(f"Response: {text_response} ")
+            logger.debug(f"Response: {text_response} ")
             return text_response
 
         return "抱歉，我无法回答你的问题。"
     except Exception as e:
         # Return error message
+        logger.error(f"Error processing your question: {str(e)}")
         return f"Error processing your question: {str(e)}"

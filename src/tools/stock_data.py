@@ -17,5 +17,5 @@ def stock_data_lookup(ticker):
     stock = yf.Ticker(ticker)
     hist = stock.history(period="1mo")
     hist = hist.reset_index().to_json(orient="split", index=False, date_format="iso")
-    logger.info(f"Price history for {ticker=}: {hist=}")
+    logger.debug(f"Price history for {ticker=}: {hist=}")
     return hist

@@ -48,7 +48,7 @@ def web_search(
             request
         )  # nosec: B310 fixed url we want to open
         response_data: str = response.read().decode("utf-8")
-        logger.info(f"response from Tavily AI search {response_data=}")
+        logger.debug(f"response from Tavily AI search {response_data=}")
         return response_data
     except urllib.error.HTTPError as e:
         logger.error(

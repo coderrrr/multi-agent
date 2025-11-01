@@ -6,8 +6,8 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-STOCK_ANALYSIS_SYSTEM_PROMPT = (
-    """You are a seasoned stock investment analyst. For the given stock ticker, perform the following analysis in sequence:
+STOCK_ANALYSIS_SYSTEM_PROMPT = """
+You are a seasoned stock investment analyst. For the given stock ticker, perform the following analysis in sequence:
 
 1. Retrieve current stock price data and recent price movements
 2. Gather latest news and market developments for the stock
@@ -25,15 +25,14 @@ Requirements:
 
 Deliver actionable insights that help investors make informed decisions.
 Always use Chinese as final output language.
-""",
-)
+"""
 
 # Create a BedrockModel
 bedrock_model = BedrockModel(
     model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
     region_name="us-west-2",
     temperature=0.3,
-    streaming=False,
+    streaming=True,
 )
 
 
@@ -66,10 +65,11 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
         text_response = str(agent_response)
 
         if len(text_response) > 0:
-            logger.info(f"Response: {text_response} ")
+            logger.debug(f"Response: {text_response} ")
             return text_response
 
         return "抱歉，我无法对这只股票进行分析。"
     except Exception as e:
         # Return error message
+        logger.error(f"Error processing stock analysis: {str(e)}")
         return f"Error processing stock analysis: {str(e)}"
