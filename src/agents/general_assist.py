@@ -67,9 +67,9 @@ def general_assistant(query: str) -> str:
 
         if len(text_response) > 0:
             logger.debug(f"Response: {text_response} ")
-            return text_response
+            return text_response + "\n"
 
-        return "抱歉，我无法回答你的问题。"
+        return "抱歉，我无法回答你的问题。\n"
     except Exception as e:
         # Return error message
         logger.error(f"Error processing your question: {str(e)}")

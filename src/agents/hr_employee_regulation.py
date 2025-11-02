@@ -44,7 +44,7 @@ def hr_employee_regulation_search(query: str) -> str:
 
         if "output" in response and "text" in response["output"]:
             logger.debug(f"Response: {response["output"]["text"]} ")
-            return response["output"]["text"]
+            return response["output"]["text"] + "\n"
         return ""
 
     except Exception as e:

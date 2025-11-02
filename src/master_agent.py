@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-"""
-# 📁 Main Strands Agent
-
-A specialized Strands agent that is the orchestrator to utilize sub-agents and tools at its disposal to answer a user query.
-
-## What This Example Shows
-
-"""
-
 import readline
 from strands import Agent
 from strands.models import BedrockModel

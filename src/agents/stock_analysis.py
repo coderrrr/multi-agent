@@ -25,6 +25,7 @@ Requirements:
 
 Deliver actionable insights that help investors make informed decisions.
 Always use Chinese as final output language.
+Add a stock page link in new line at the end of content, pattern: <myapp://pages/stock/detail?stock_code>
 """
 
 # Create a BedrockModel
@@ -66,9 +67,9 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
 
         if len(text_response) > 0:
             logger.debug(f"Response: {text_response} ")
-            return text_response
+            return text_response + "\n"
 
-        return "抱歉，我无法对这只股票进行分析。"
+        return "抱歉，我无法对这只股票进行分析。\n"
     except Exception as e:
         # Return error message
         logger.error(f"Error processing stock analysis: {str(e)}")
