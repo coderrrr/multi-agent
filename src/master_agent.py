@@ -66,7 +66,7 @@ if __name__ == "__main__":
     logger.info("Starting Strands Multi-Agent Demo")
     print("\n📁 Strands Multi-Agent Demo 📁\n")
     print(
-        "Ask a question in any subject area, and I'll route it to the appropriate specialist."
+        "请输入你的问题, 我将路由到匹配的 Agent 来回答："
     )
     print("Type 'exit' to quit.")
 
@@ -75,7 +75,6 @@ if __name__ == "__main__":
         try:
             user_input = input("\n> ")
             if user_input.lower() == "exit":
-                logger.info("User exited the application")
                 print("\nGoodbye! 👋")
                 break
 
