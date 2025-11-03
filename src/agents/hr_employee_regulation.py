@@ -5,14 +5,14 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
 
 # Create Bedrock Agent Runtime client for Knowledge Base
-bedrock_agent_client = boto3.client("bedrock-agent-runtime", region_name="us-west-2")
+bedrock_agent_client = boto3.client("bedrock-agent-runtime", region_name=REGION)
 
 # Knowledge Base configuration
 KNOWLEDGE_BASE_ID = os.environ.get("KNOWLEDGE_BASE_ID")
 MODEL_ARN = "arn:aws:bedrock:us-west-2:640037134104:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
-
 
 @tool
 def hr_employee_regulation_search(query: str) -> str:
@@ -30,7 +30,7 @@ def hr_employee_regulation_search(query: str) -> str:
     formatted_query = f"Use Chinese as output language, answer this knowledge question concisely: {query}"
     try:
         logger.info("[Routed to HR Employee Regulation Assistant...]")
-        logger.info(f"formatted_query: {formatted_query} ")
+        logger.info(f"formatted_query: \"{formatted_query}\"")
         response = bedrock_agent_client.retrieve_and_generate(
             input={"text": formatted_query},
             retrieveAndGenerateConfiguration={
@@ -43,7 +43,7 @@ def hr_employee_regulation_search(query: str) -> str:
         )
 
         if "output" in response and "text" in response["output"]:
-            logger.debug(f"Response: {response["output"]["text"]} ")
+            logger.debug(f'Response: {response["output"]["text"]} ')
             return response["output"]["text"] + "\n"
         return ""
 

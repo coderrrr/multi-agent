@@ -1,8 +1,11 @@
+import os
 from strands import Agent, tool
 from strands.models import BedrockModel
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
 
 GENERAL_ASSISTANT_SYSTEM_PROMPT = """
 You are GeneralAssist, a concise general knowledge assistant for topics outside specialized domains. Your key characteristics are:
@@ -34,7 +37,7 @@ Always use Chinese as final output language.
 # Create a BedrockModel
 bedrock_model = BedrockModel(
     model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
-    region_name="us-west-2",
+    region_name=REGION,
     temperature=0.3,
     streaming=True,
 )
@@ -52,11 +55,11 @@ def general_assistant(query: str) -> str:
         A concise response to the general knowledge query
     """
     # Format the query for the agent
-    formatted_query = f"Answer this general knowledge question concisely, remembering to start by acknowledging that you are not an expert in this specific area: {query}"
+    formatted_query = f"Answer this general knowledge question concisely: {query}"
 
     try:
         logger.info("[Routed to General Assistant Agent...]")
-        logger.info(f"formatted_query: {formatted_query} ")
+        logger.info(f"formatted_query: \"{formatted_query}\"")
         agent = Agent(
             model=bedrock_model,
             system_prompt=GENERAL_ASSISTANT_SYSTEM_PROMPT,
