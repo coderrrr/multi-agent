@@ -1,22 +1,26 @@
 import os
 import readline
+from utils.logger import get_logger
+
 from strands import Agent
 from strands.models import BedrockModel
-from strands.hooks import AgentInitializedEvent, HookProvider, HookRegistry, MessageAddedEvent
 from bedrock_agentcore.memory import MemoryClient
 
 from agents.user_profile import get_user_risk_tolerance_level
 from agents.general_assist import general_assistant
 from agents.stock_analysis import stock_analysis
 from agents.hr_employee_regulation import hr_employee_regulation_search
-from utils.logger import get_logger
+from agentcore.memory_hook import MemoryHookProvider
+
 
 logger = get_logger(__name__)
 
 REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
-ACTOR_ID = "user_123" # It can be any unique identifier
-SESSION_ID = "personal_session_001" # Unique session identifier
-MEMORY_ID = "memory_multi_agent-ocjSmGCRJz" # Created on Bedrock AgentCore
+# Created on Bedrock AgentCore
+MEMORY_ID = os.environ.get("AGENTCORE_MEMORY_ID")
+ACTOR_ID = "user_123"  # It can be any unique identifier
+SESSION_ID = "personal_session_001"  # Unique session identifier
+
 memory_client = MemoryClient(region_name=REGION)
 
 # Create a BedrockModel
@@ -58,71 +62,8 @@ Your role is to:
    - DO NOT remove any <link> from original response.
 """
 
-class MemoryHookProvider(HookProvider):
-    def __init__(self, memory_client: MemoryClient, memory_id: str):
-        self.memory_client = memory_client
-        self.memory_id = memory_id
-    
-    def on_agent_initialized(self, event: AgentInitializedEvent):
-        """Load recent conversation history when agent starts"""
-        try:
-            # Get session info from agent state
-            actor_id = event.agent.state.get("actor_id")
-            session_id = event.agent.state.get("session_id")
-            
-            if not actor_id or not session_id:
-                logger.warning("Missing actor_id or session_id in agent state")
-                return
-            
-            # Load the last 5 conversation turns from memory
-            recent_turns = self.memory_client.get_last_k_turns(
-                memory_id=self.memory_id,
-                actor_id=actor_id,
-                session_id=session_id,
-                k=5
-            )
-            
-            if recent_turns:
-                # Format conversation history for context
-                context_messages = []
-                for turn in recent_turns:
-                    for message in turn:
-                        role = message['role']
-                        content = message['content']['text']
-                        context_messages.append(f"{role}: {content}")
-                
-                context = "\n".join(context_messages)
-                # Add context to agent's system prompt.
-                event.agent.system_prompt += f"\n\nRecent conversation:\n{context}"
-                logger.info(f"✅ Loaded {len(recent_turns)} conversation turns")
-                
-        except Exception as e:
-            logger.error(f"Memory load error: {e}")
-    
-    def on_message_added(self, event: MessageAddedEvent):
-        """Store messages in memory"""
-        messages = event.agent.messages
-        try:
-            # Get session info from agent state
-            actor_id = event.agent.state.get("actor_id")
-            session_id = event.agent.state.get("session_id")
+memroy_hook = MemoryHookProvider(memory_client, MEMORY_ID)
 
-            if messages[-1]["content"][0].get("text"):
-                self.memory_client.create_event(
-                    memory_id=self.memory_id,
-                    actor_id=actor_id,
-                    session_id=session_id,
-                    messages=[(messages[-1]["content"][0]["text"], messages[-1]["role"])]
-                )
-        except Exception as e:
-            logger.error(f"Memory save error: {e}")
-    
-    def register_hooks(self, registry: HookRegistry):
-        # Register memory hooks
-        registry.add_callback(MessageAddedEvent, self.on_message_added)
-        registry.add_callback(AgentInitializedEvent, self.on_agent_initialized)
-
-# Create a teacher agent with available tools
 master_agent = Agent(
     model=bedrock_model,
     system_prompt=MASTER_SYSTEM_PROMPT,
@@ -133,33 +74,20 @@ master_agent = Agent(
         get_user_risk_tolerance_level,
         general_assistant,
     ],
-    hooks=[MemoryHookProvider(memory_client, MEMORY_ID)],
+    hooks=[memroy_hook],
     state={"actor_id": ACTOR_ID, "session_id": SESSION_ID}
 )
 
-# Check what's stored in memory
-def view_memmory(memory_id,actor_id,session_id):
-    print("=== Memory Contents ===")
-    recent_turns = memory_client.get_last_k_turns(
-        memory_id=memory_id,
-        actor_id=actor_id,
-        session_id=session_id,
-        k=3 # Adjust k to see more or fewer turns
-    )
+memroy_hook.view_memmory(ACTOR_ID, SESSION_ID)
 
-    for i, turn in enumerate(recent_turns, 1):
-        print(f"Turn {i}:")
-        for message in turn:
-            role = message['role']
-            content = message['content']['text'][:100] + "..." if len(message['content']['text']) > 100 else message['content']['text']
-            print(f"  {role}: {content}")
-        print()
+# Check what's stored in memory
+
 
 # Example usage
 if __name__ == "__main__":
     logger.info("Starting Strands Multi-Agent Demo")
     print("\n📁 Strands Multi-Agent Demo 📁\n")
-    view_memmory(MEMORY_ID,ACTOR_ID,SESSION_ID);
+    
     print(
         "请输入你的问题, 我将路由到匹配的 Agent 来回答："
     )

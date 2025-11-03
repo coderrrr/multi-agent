@@ -5,5 +5,6 @@ export AWS_SECRET_ACCESS_KEY=
 export LOG_LEVEL=ERROR
 export AWS_DEFAULT_REGION=us-west-2
 export KNOWLEDGE_BASE_ID=QX2FOY95E8
+export AGENTCORE_MEMORY_ID=memory_multi_agent-ocjSmGCRJz
 
 python master_agent.py
