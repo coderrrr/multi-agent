@@ -59,7 +59,7 @@ def general_assistant(query: str) -> str:
     formatted_query = f"Answer this general knowledge question concisely: {query}"
 
     try:
-        logger.info("[Routed to General Assistant Agent...]")
+        logger.info("[🤖 Routed to General Assistant Agent...]")
         logger.info(f"formatted_query: \"{formatted_query}\"")
         agent = Agent(
             model=bedrock_model,

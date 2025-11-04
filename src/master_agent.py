@@ -63,7 +63,7 @@ Your role is to:
    - Always confirm your understanding before routing to ensure accurate assistance.
    - Always use Chinese as final output language.
    - If the sub agent has already returned a fully comprehensible result, DO NOT include any additional summaries or comments in your response.
-   - DO NOT remove any <link> from original response.
+   - DO NOT remove any tag <link> | <myapp> from original response.
 """
 
 memroy_hook = MemoryHookProvider(memory_client, MEMORY_ID)

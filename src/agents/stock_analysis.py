@@ -57,7 +57,7 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
     formatted_query = f"Analyze this stock: {stock} for user risk tolerance level: {user_risk_tolerance_level}."
 
     try:
-        logger.info("[Routed to Stock Analysis Agent...]")
+        logger.info("[🤖 Routed to Stock Analysis Agent...]")
         logger.info(f"formatted_query: \"{formatted_query}\"")
 
         agent = Agent(

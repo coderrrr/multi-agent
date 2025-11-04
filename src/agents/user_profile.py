@@ -16,7 +16,7 @@ def get_user_risk_tolerance_level(user_id):
     Returns:
         Int level of risk tolerance.
     """
-    logger.info("[Routed to User Profile Agent...]")
+    logger.info("[🤖 Routed to User Profile Agent...]")
     logger.info(f"executing get_user_risk_tolerance with {user_id=}")
     # 生成随机数 1-5
     risk_tolerance = random.randint(1, 5)
