@@ -1,3 +1,4 @@
+"""股票分析 Agent - 提供实时股票数据分析和投资建议"""
 import os
 from strands import Agent, tool
 from strands.models import BedrockModel

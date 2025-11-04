@@ -1,3 +1,4 @@
+"""网络搜索工具 - 使用 Tavily AI 搜索引擎进行网络信息检索"""
 import json
 import urllib.request
 import urllib.error

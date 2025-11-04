@@ -1,3 +1,4 @@
+"""主协调器模块 - 负责智能路由用户查询到相应的专业 Agent"""
 import os
 import readline
 from utils.logger import get_logger
@@ -82,9 +83,13 @@ master_agent = Agent(
 )
 
 memroy_hook.view_memories(ACTOR_ID, SESSION_ID)
-memroy_hook.retrieve_user_preference(ACTOR_ID)
-memroy_hook.retrieve_semantic(ACTOR_ID)
-memroy_hook.retrieve_summaries(ACTOR_ID, SESSION_ID)
+print()
+print(memroy_hook.retrieve_user_preference(ACTOR_ID))
+print()
+print(memroy_hook.retrieve_semantic(ACTOR_ID))
+print()
+print(memroy_hook.retrieve_summaries(ACTOR_ID, SESSION_ID))
+print()
 
 # 检查内存中存储的内容
 
@@ -114,9 +119,7 @@ if __name__ == "__main__":
 
         except KeyboardInterrupt:
             logger.info("Execution interrupted by user")
-            print("\n\nExecution interrupted. Exiting...")
             break
         except Exception as e:
             logger.error(f"An error occurred: {str(e)}")
             print(f"\nAn error occurred: {str(e)}")
-            print("Please try asking a different question.")

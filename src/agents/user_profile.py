@@ -1,3 +1,4 @@
+"""用户画像 Tool - 获取用户风险承受能力等个人信息"""
 import random
 from strands import tool
 from utils.logger import get_logger

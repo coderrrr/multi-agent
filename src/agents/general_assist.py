@@ -1,3 +1,4 @@
+"""通用助手 Agent - 处理非专业领域的通用知识查询"""
 import os
 from strands import Agent, tool
 from strands.models import BedrockModel

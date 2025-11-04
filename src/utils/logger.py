@@ -1,3 +1,4 @@
+"""日志工具模块 - 提供统一的日志配置和获取功能"""
 import logging
 import os
 

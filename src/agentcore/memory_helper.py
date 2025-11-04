@@ -1,3 +1,4 @@
+"""记忆管理模块 - 提供 Bedrock AgentCore 的短期和长期记忆的创建、存储和检索功能"""
 from typing import Dict
 from botocore.exceptions import ClientError
 from strands.hooks import AgentInitializedEvent, HookProvider, HookRegistry, MessageAddedEvent
@@ -24,15 +25,15 @@ def create_short_term_memory(memory_client: MemoryClient, memory_name: str):
         logger.info(f"✅ Created memory: {memory_id}")
         return memory_id
     except ClientError as e:
-        logger.info(f"❌ ERROR: {e}")
         if e.response['Error']['Code'] == 'ValidationException' and "already exists" in str(e):
             # 如果 Memory 已存在，获取其 ID
             memories = memory_client.list_memories()
             memory_id = next(
                 (m['id'] for m in memories if m['id'].startswith(memory_name)), None)
             logger.info(
-                f"Memory already exists. Using existing memory ID: {memory_id}")
+                f"⚠️ Memory already exists. Using existing memory ID: {memory_id}")
             return memory_id
+        logger.error(f"❌ ERROR: {e}")
     except Exception as e:
         # 显示 Memory 创建过程中的错误
         logger.error(f"❌ ERROR: {e}")
@@ -91,15 +92,15 @@ def create_long_term_memory(memory_client: MemoryClient, memory_name: str):
         logger.info(f"✅ Created memory: {memory_id}")
         return memory_id
     except ClientError as e:
-        logger.info(f"❌ ERROR: {e}")
         if e.response['Error']['Code'] == 'ValidationException' and "already exists" in str(e):
             # 如果 Memory 已存在，获取其 ID
-            memories = client.list_memories()
+            memories = memory_client.list_memories()
             memory_id = next(
                 (m['id'] for m in memories if m['id'].startswith(memory_name)), None)
             logger.info(
-                f"Memory already exists. Using existing memory ID: {memory_id}")
+                f"⚠️ Memory already exists. Using existing memory ID: {memory_id}")
             return memory_id
+        logger.error(f"❌ ERROR: {e}")
     except Exception as e:
         # 显示 Memory 创建过程中的错误
         logger.error(f"❌ ERROR: {e}")
@@ -131,7 +132,8 @@ class MemoryHookProvider(HookProvider):
         try:
             actor_id = event.agent.state.get("actor_id")
             session_id = event.agent.state.get("session_id")
-            self.namespaces = self.get_namespaces(self.memory_client, self.memory_id)
+            self.namespaces = self.get_namespaces(
+                self.memory_client, self.memory_id)
 
             if not actor_id or not session_id:
                 logger.warning("Missing actor_id or session_id in agent state")
@@ -216,7 +218,7 @@ class MemoryHookProvider(HookProvider):
                     message['content']['text']) > 100 else message['content']['text']
                 print(f"  {role}: {content}")
             print()
-    
+
     def retrieve_user_preference(self, actor_id):
         print(
             f"=== Memory User Preferences for actor_id: {actor_id} ===")
@@ -237,7 +239,7 @@ class MemoryHookProvider(HookProvider):
             namespace=f"users/{actor_id}/semantic",
             query="Summaries all the semantics"
         )
-        return memories     
+        return memories
 
     def retrieve_summaries(self, actor_id, session_id):
         print(

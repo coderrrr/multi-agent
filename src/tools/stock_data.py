@@ -1,3 +1,4 @@
+"""股票数据工具 - 使用 yfinance 获取股票历史价格数据"""
 import json
 import yfinance as yf
 from strands import tool

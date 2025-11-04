@@ -1,3 +1,4 @@
+"""HR规章 Tool - 基于 AWS Bedrock Knowledge Base 提供员工规章查询服务"""
 import os
 import boto3
 from strands import tool
