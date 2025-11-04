@@ -185,7 +185,7 @@ class MemoryHookProvider(HookProvider):
 
     def view_memories(self, actor_id, session_id):
         print(
-            f"=== Memory Contents for actor_id: {actor_id}, session_id{session_id} ===")
+            f"=== Memory [Contents] for actor_id: {actor_id}, session_id{session_id} ===")
         recent_turns = self.memory_client.get_last_k_turns(
             memory_id=self.memory_id,
             actor_id=actor_id,
@@ -199,55 +199,37 @@ class MemoryHookProvider(HookProvider):
                 content = message['content']['text'][:100] + "..." if len(
                     message['content']['text']) > 100 else message['content']['text']
                 print(f"  {role}: {content}")
-            print()
-
-    def view_memories(self, actor_id, session_id):
-        print(
-            f"=== Memory Contents for actor_id: {actor_id}, session_id{session_id} ===")
-        recent_turns = self.memory_client.get_last_k_turns(
-            memory_id=self.memory_id,
-            actor_id=actor_id,
-            session_id=session_id,
-            k=3
-        )
-        for i, turn in enumerate(recent_turns, 1):
-            print(f"Turn {i}:")
-            for message in turn:
-                role = message['role']
-                content = message['content']['text'][:100] + "..." if len(
-                    message['content']['text']) > 100 else message['content']['text']
-                print(f"  {role}: {content}")
-            print()
+            print()    
 
     def retrieve_user_preference(self, actor_id):
         print(
-            f"=== Memory User Preferences for actor_id: {actor_id} ===")
+            f"=== Memory [User Preferences] for actor_id: {actor_id} ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
             namespace=f"users/{actor_id}/preference",
-            query="Summaries all the preferences"
+            query="Summarise all the preferences"
         )
         return memories
 
     def retrieve_semantic(self, actor_id):
         print(
-            f"=== Memory Semantics for actor_id: {actor_id} ===")
+            f"=== Memory [Semantics] for actor_id: {actor_id} ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
             namespace=f"users/{actor_id}/semantic",
-            query="Summaries all the semantics"
+            query="Summarise all the semantics"
         )
         return memories
 
     def retrieve_summaries(self, actor_id, session_id):
         print(
-            f"=== Memory Summaries for actor_id: {actor_id}, session_id{session_id} ===")
+            f"=== Memory [Summaries for actor_id: {actor_id}, session_id{session_id} ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
             namespace=f"user/{actor_id}/summary/{session_id}",
-            query="Summaries all the questions"
+            query="Summarise all the questions"
         )
         return memories
