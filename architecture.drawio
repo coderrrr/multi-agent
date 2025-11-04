@@ -22,13 +22,13 @@
         <mxCell id="stock" value="&lt;b&gt;stock_analysis.py&lt;br&gt;&lt;br&gt;股票分析 Agent&lt;/b&gt;&lt;br&gt;&lt;br&gt;- 股票数据分析&lt;br&gt;- 投资建议" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="205" y="240" width="160" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="hr" value="&lt;b&gt;hr_employee_&lt;br&gt;regulation_search.py&lt;br&gt;&lt;br&gt;HR规章查询工具&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;div&gt;- 查询知识库&lt;b&gt;&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="hr" value="&lt;b&gt;hr_employee_&lt;br&gt;regulation.py&lt;br&gt;&lt;br&gt;HR规章查询工具&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;div&gt;- 查询知识库&lt;b&gt;&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="405" y="240" width="160" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="user" value="&lt;b&gt;get_user_risk_&lt;br&gt;tolerance_level.py&lt;br&gt;&lt;br&gt;用户画像工具&lt;/b&gt;&lt;br&gt;&lt;br&gt;- 风险承受等级" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="user" value="&lt;b&gt;user_profile.py&lt;br&gt;&lt;br&gt;用户画像工具&lt;/b&gt;&lt;br&gt;&lt;br&gt;- 风险承受等级" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="605" y="240" width="160" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="general" value="&lt;b&gt;general_assistant.py&lt;br&gt;&lt;br&gt;通用助手 Agent&lt;/b&gt;&lt;br&gt;&lt;br&gt;- 通用知识回答" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="general" value="&lt;b&gt;general_assist.py&lt;br&gt;&lt;br&gt;通用知识 Agent&lt;/b&gt;&lt;br&gt;&lt;br&gt;- 通用知识回答" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="805" y="240" width="160" height="120" as="geometry" />
         </mxCell>
         <mxCell id="_qGsq2th8VA7HRJQB4zY-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="stock" target="websearch">
@@ -97,7 +97,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_qGsq2th8VA7HRJQB4zY-25" value="索引文档" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="550" y="550" width="70" height="30" as="geometry" />
+          <mxGeometry x="545" y="548" width="70" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
