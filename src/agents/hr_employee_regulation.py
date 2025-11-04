@@ -7,10 +7,10 @@ logger = get_logger(__name__)
 
 REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
 
-# Create Bedrock Agent Runtime client for Knowledge Base
+# 创建 Bedrock Agent Runtime 客户端用于知识库
 bedrock_agent_client = boto3.client("bedrock-agent-runtime", region_name=REGION)
 
-# Knowledge Base configuration
+# 知识库配置
 KNOWLEDGE_BASE_ID = os.environ.get("KNOWLEDGE_BASE_ID")
 MODEL_ARN = "arn:aws:bedrock:us-west-2:640037134104:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
@@ -26,7 +26,7 @@ def hr_employee_regulation_search(query: str) -> str:
     Returns:
         A concise response to queries on the relevant knowledge base
     """
-    # Format the query for the agent
+    # 格式化查询
     formatted_query = f"Use Chinese as output language, answer this knowledge question concisely: {query}"
     try:
         logger.info("[Routed to HR Employee Regulation Assistant...]")

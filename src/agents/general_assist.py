@@ -54,7 +54,7 @@ def general_assistant(query: str) -> str:
     Returns:
         A concise response to the general knowledge query
     """
-    # Format the query for the agent
+    # 格式化查询
     formatted_query = f"Answer this general knowledge question concisely: {query}"
 
     try:
@@ -63,7 +63,7 @@ def general_assistant(query: str) -> str:
         agent = Agent(
             model=bedrock_model,
             system_prompt=GENERAL_ASSISTANT_SYSTEM_PROMPT,
-            tools=[],  # No specialized tools needed for general knowledge
+            tools=[],  # 通用知识不需要专用工具
         )
         agent_response = agent(formatted_query)
         text_response = str(agent_response)
@@ -74,6 +74,6 @@ def general_assistant(query: str) -> str:
 
         return "抱歉，我无法回答你的问题。\n"
     except Exception as e:
-        # Return error message
+        # 返回错误信息
         logger.error(f"Error processing your question: {str(e)}")
         return f"Error processing your question: {str(e)}"

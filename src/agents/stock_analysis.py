@@ -52,7 +52,7 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
     Returns:
         A comprehensive stock analysis report
     """
-    # Format the query for the agent
+    # 格式化查询
     formatted_query = f"Analyze this stock: {stock} for user risk tolerance level: {user_risk_tolerance_level}."
 
     try:
@@ -73,6 +73,6 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
 
         return "抱歉，我无法对这只股票进行分析。\n"
     except Exception as e:
-        # Return error message
+        # 返回错误信息
         logger.error(f"Error processing stock analysis: {str(e)}")
         return f"Error processing stock analysis: {str(e)}"

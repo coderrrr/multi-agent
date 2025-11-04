@@ -10,20 +10,23 @@ from agents.user_profile import get_user_risk_tolerance_level
 from agents.general_assist import general_assistant
 from agents.stock_analysis import stock_analysis
 from agents.hr_employee_regulation import hr_employee_regulation_search
-from agentcore.memory_hook import MemoryHookProvider
-
+from agentcore import memory_helper
+from agentcore.memory_helper import MemoryHookProvider
 
 logger = get_logger(__name__)
 
 REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
-# Created on Bedrock AgentCore
-MEMORY_ID = os.environ.get("AGENTCORE_MEMORY_ID")
-ACTOR_ID = "user_123"  # It can be any unique identifier
-SESSION_ID = "personal_session_001"  # Unique session identifier
+ACTOR_ID = "user_123"  # 用户唯一标识符
+SESSION_ID = "personal_session_001"  # 会话唯一标识符
+
+SHORT_TERM_MEMORY_NAME="short_term_memory_demo1"
+LONG_TERM_MEMORY_NAME="long_term_memory_demo1"
 
 memory_client = MemoryClient(region_name=REGION)
+MEMORY_ID = memory_helper.create_long_term_memory(memory_client, LONG_TERM_MEMORY_NAME);
 
-# Create a BedrockModel
+
+# 创建 Bedrock 模型
 bedrock_model = BedrockModel(
     model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
     region_name=REGION,
@@ -31,7 +34,7 @@ bedrock_model = BedrockModel(
     streaming=True,
 )
 
-# Define a focused system prompt for file operations
+# 定义主协调器系统提示词
 MASTER_SYSTEM_PROMPT = """
 You are Comprehensive AI Assist, a sophisticated enterprise orchestrator designed to coordinate comprehensive support across multiple subjects.
 Your role is to:
@@ -78,12 +81,15 @@ master_agent = Agent(
     state={"actor_id": ACTOR_ID, "session_id": SESSION_ID}
 )
 
-memroy_hook.view_memmory(ACTOR_ID, SESSION_ID)
+memroy_hook.view_memories(ACTOR_ID, SESSION_ID)
+memroy_hook.retrieve_user_preference(ACTOR_ID)
+memroy_hook.retrieve_semantic(ACTOR_ID)
+memroy_hook.retrieve_summaries(ACTOR_ID, SESSION_ID)
 
-# Check what's stored in memory
+# 检查内存中存储的内容
 
 
-# Example usage
+# 主程序入口
 if __name__ == "__main__":
     logger.info("Starting Strands Multi-Agent Demo")
     print("\n📁 Strands Multi-Agent Demo 📁\n")
@@ -93,7 +99,7 @@ if __name__ == "__main__":
     )
     print("Type 'exit' to quit.")
 
-    # Interactive loop
+    # 交互式循环
     while True:
         try:
             user_input = input("\n> ")
