@@ -30,7 +30,7 @@ def hr_employee_regulation_search(query: str) -> str:
     # 格式化查询
     formatted_query = f"Use Chinese as output language, answer this knowledge question concisely: {query}"
     try:
-        logger.info("[🤖 Routed to HR Employee Regulation Assistant...]")
+        logger.info("🔧[Routed to HR Employee Regulation Assistant...]")
         logger.info(f"formatted_query: \"{formatted_query}\"")
         response = bedrock_agent_client.retrieve_and_generate(
             input={"text": formatted_query},

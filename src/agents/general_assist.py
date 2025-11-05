@@ -32,12 +32,12 @@ You are GeneralAssist, a concise general knowledge assistant for topics outside 
    - State clearly if information is limited
    - Suggest specialized assistance when appropriate
 
-Always maintain accuracy while prioritizing conciseness and clarity in every response, and never forget to acknowledge your non-expert status at the beginning of your responses.
+Always maintain accuracy while prioritizing conciseness and clarity in every response.
 Always use Chinese as final output language.
 """
 # Create a BedrockModel
 bedrock_model = BedrockModel(
-    model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    model_id="us.anthropic.claude-haiku-4-5-20251001-v1:0",
     region_name=REGION,
     temperature=0.3,
     streaming=True,
@@ -59,7 +59,7 @@ def general_assistant(query: str) -> str:
     formatted_query = f"Answer this general knowledge question concisely: {query}"
 
     try:
-        logger.info("[🤖 Routed to General Assistant Agent...]")
+        logger.info("🔧[Routed to General Assistant Agent...]")
         logger.info(f"formatted_query: \"{formatted_query}\"")
         agent = Agent(
             model=bedrock_model,

@@ -16,6 +16,7 @@ You are a seasoned stock investment analyst. For the given stock ticker, perform
 1. Retrieve current stock price data and recent price movements
 2. Gather latest news and market developments for the stock
 3. Analyze the collected data to assess investment potential
+4. Analysis should be conducted according to the user's risk tolerance level
 
 Requirements:
 - Use tools sequentially, not in parallel
@@ -26,15 +27,14 @@ Requirements:
   * Clear investment recommendation with rationale
 - Base analysis on factual data only
 - Write in a professional, objective tone suitable for investors
-
-Deliver actionable insights that help investors make informed decisions.
+- Deliver actionable insights that help investors make informed decisions.
 Always use Chinese as final output language.
 Add a stock page in new line at the end of content, pattern: <myapp://pages/stock/detail?stock_code>
 """
 
 # Create a BedrockModel
 bedrock_model = BedrockModel(
-    model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    model_id="global.anthropic.claude-haiku-4-5-20251001-v1:0",
     region_name=REGION,
     temperature=0.3,
     streaming=True,
@@ -57,7 +57,7 @@ def stock_analysis(stock: str, user_risk_tolerance_level: int = 3) -> str:
     formatted_query = f"Analyze this stock: {stock} for user risk tolerance level: {user_risk_tolerance_level}."
 
     try:
-        logger.info("[🤖 Routed to Stock Analysis Agent...]")
+        logger.info("🔧[Routed to Stock Analysis Agent...]")
         logger.info(f"formatted_query: \"{formatted_query}\"")
 
         agent = Agent(

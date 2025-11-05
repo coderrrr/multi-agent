@@ -28,8 +28,9 @@ MEMORY_ID = memory_helper.create_long_term_memory(memory_client, LONG_TERM_MEMOR
 
 
 # 创建 Bedrock 模型
+# model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
 bedrock_model = BedrockModel(
-    model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    model_id="global.anthropic.claude-haiku-4-5-20251001-v1:0",
     region_name=REGION,
     temperature=0.3,
     streaming=True,
@@ -82,6 +83,7 @@ master_agent = Agent(
     state={"actor_id": ACTOR_ID, "session_id": SESSION_ID}
 )
 
+print("记忆体内容：")
 memroy_hook.view_memories(ACTOR_ID, SESSION_ID)
 print()
 print(memroy_hook.retrieve_user_preference(ACTOR_ID))
@@ -96,11 +98,11 @@ print()
 
 # 主程序入口
 if __name__ == "__main__":
-    logger.info("Starting Strands Multi-Agent Demo")
+    logger.info("Starting Strands Multi-Agent Demo...")
     print("\n📁 Strands Multi-Agent Demo 📁\n")
     
     print(
-        "请输入你的问题, 我将路由到匹配的 Agent 来回答："
+        "请输入问题, 我将路由到匹配的 Agent 来回答："
     )
     print("Type 'exit' to quit.")
 
@@ -115,7 +117,9 @@ if __name__ == "__main__":
                 user_input,
             )
             content = str(response)
-            print("\n🤖->" + content)
+            print()
+            print("🤖[Master Agent] Response ->")
+            print(content)
 
         except KeyboardInterrupt:
             logger.info("Execution interrupted by user")

@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 
 def create_short_term_memory(memory_client: MemoryClient, memory_name: str):
     """创建短期记忆"""
-    logger.info(f"Createing short-term memory {memory_name}...")
+    logger.info(f"Createing short-term memory [{memory_name}]...")
     try:
         # 创建不带策略的 Memory 资源（仅访问短期记忆）
         memory = memory_client.create_memory_and_wait(
@@ -52,10 +52,10 @@ def create_short_term_memory(memory_client: MemoryClient, memory_name: str):
 
 def create_long_term_memory(memory_client: MemoryClient, memory_name: str):
     """创建长期记忆
-    logger.info(f"Createing long-term memory {memory_name}...")
+    logger.info(f"Createing long-term memory [{memory_name}]...")
     SemanticMemoryStrategy(语义记忆策略): 从对话中抽取出事实和知识，以便日后查询。
     SummaryMemoryStrategy(摘要策略): 为每个会话生成对话摘要，提炼主要内容。
-    UserPreferenceMemoryStrategy(用户偏好策略):捕获用户的偏好、风格和重复选择等信息。"""
+    UserPreferenceMemoryStrategy(用户偏好策略): 捕获用户的偏好、风格和重复选择等信息。"""
 
     try:
         # 创建带策略的 Memory 资源
@@ -98,7 +98,7 @@ def create_long_term_memory(memory_client: MemoryClient, memory_name: str):
             memory_id = next(
                 (m['id'] for m in memories if m['id'].startswith(memory_name)), None)
             logger.info(
-                f"⚠️ Memory already exists. Using existing memory ID: {memory_id}")
+                f"⚠️ Memory already exists. Using existing {memory_id=}")
             return memory_id
         logger.error(f"❌ ERROR: {e}")
     except Exception as e:
@@ -156,7 +156,7 @@ class MemoryHookProvider(HookProvider):
 
                 context = "\n".join(context_messages)
                 event.agent.system_prompt += f"\n\nRecent conversation:\n{context}"
-                logger.info(f"✅ Loaded {len(recent_turns)} conversation turns")
+                logger.debug(f"✅ Loaded {len(recent_turns)} conversation turns")
 
         except Exception as e:
             logger.error(f"Memory load error: {e}")
@@ -173,8 +173,7 @@ class MemoryHookProvider(HookProvider):
                     memory_id=self.memory_id,
                     actor_id=actor_id,
                     session_id=session_id,
-                    messages=[(messages[-1]["content"][0]
-                               ["text"], messages[-1]["role"])]
+                    messages=[(messages[-1]["content"][0]["text"], messages[-1]["role"])]
                 )
         except Exception as e:
             logger.error(f"Memory save error: {e}")
@@ -185,7 +184,7 @@ class MemoryHookProvider(HookProvider):
 
     def view_memories(self, actor_id, session_id):
         print(
-            f"=== Memory [Contents] for actor_id: {actor_id}, session_id{session_id} ===")
+            f"=== Memory [Contents - 对话内容] for [{actor_id=}], [{session_id=}] ===")
         recent_turns = self.memory_client.get_last_k_turns(
             memory_id=self.memory_id,
             actor_id=actor_id,
@@ -196,14 +195,12 @@ class MemoryHookProvider(HookProvider):
             print(f"Turn {i}:")
             for message in turn:
                 role = message['role']
-                content = message['content']['text'][:100] + "..." if len(
-                    message['content']['text']) > 100 else message['content']['text']
+                content = message['content']['text'][:100] + "..." if len(message['content']['text']) > 100 else message['content']['text']
                 print(f"  {role}: {content}")
             print()    
 
     def retrieve_user_preference(self, actor_id):
-        print(
-            f"=== Memory [User Preferences] for actor_id: {actor_id} ===")
+        print(f"=== Memory [User Preferences - 用户偏好] for [{actor_id=}] ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
@@ -214,7 +211,7 @@ class MemoryHookProvider(HookProvider):
 
     def retrieve_semantic(self, actor_id):
         print(
-            f"=== Memory [Semantics] for actor_id: {actor_id} ===")
+            f"=== Memory [Semantics - 语义事实] for [{actor_id=}] ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
@@ -225,7 +222,7 @@ class MemoryHookProvider(HookProvider):
 
     def retrieve_summaries(self, actor_id, session_id):
         print(
-            f"=== Memory [Summaries for actor_id: {actor_id}, session_id{session_id} ===")
+            f"=== Memory [Summaries - 摘要总结] for [{actor_id=}], [{session_id=}] ===")
 
         memories = self.memory_client.retrieve_memories(
             memory_id=self.memory_id,
