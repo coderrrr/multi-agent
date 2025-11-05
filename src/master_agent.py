@@ -24,8 +24,8 @@ SHORT_TERM_MEMORY_NAME="short_term_memory_demo1"
 LONG_TERM_MEMORY_NAME="long_term_memory_demo1"
 
 memory_client = MemoryClient(region_name=REGION)
-MEMORY_ID = memory_helper.create_long_term_memory(memory_client, LONG_TERM_MEMORY_NAME);
 
+MEMORY_ID = memory_helper.create_short_term_memory(memory_client, LONG_TERM_MEMORY_NAME);
 
 # 创建 Bedrock 模型
 # model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",

@@ -5,10 +5,10 @@
 ## 功能特性
 
 - **主协调器**: 智能路由用户查询到相应的专业 Agent
-- **股票分析代理**: 提供实时股票数据分析和投资建议
-- **HR规章代理**: 基于 AWS Bedrock Knowledge Base 的员工规章查询
-- **用户画像代理**: 获取用户风险承受能力等个人信息
-- **通用助手**: 处理其他通用问题
+- **股票分析 Agent**: 提供实时股票数据分析和投资建议
+- **HR 规章 Agent**: 基于 AWS Bedrock Knowledge Base 的员工规章查询
+- **用户画像 Tool**: 获取用户风险承受能力等个人信息
+- **通用助手 Agent**: 处理其他通用问题
 
 ## 系统架构
 
@@ -19,7 +19,7 @@
 
 1. 用户输入 → master_agent (主协调器)
 2. master_agent 分析查询类型并路由到相应 Agent/Tool
-3. 专业 Agent 调用所需 Tools 完成任务
+3. 专业 Agent 调用所需 Agent/Tool 完成任务
 4. 结果返回给 master_agent
 5. master_agent 整合结果并返回用户
 
@@ -71,7 +71,7 @@ python src/master_agent.py
 [路由到 stock_analysis Agent，调用 stock_data_lookup 和 web_search 工具]
 
 > 公司的年假政策是什么？
-[路由到 hr_employee_regulation_search Tool，查询 Knowledge Base]
+[路由到 hr_employee_regulation_search Agent，查询 Knowledge Base]
 
 > 查询用户 user_123 的风险承受能力
 [路由到 get_user_risk_tolerance_level Tool]
@@ -107,7 +107,7 @@ src/
 - **Strands Agents**: 多智能体协作框架
 - **AWS Bedrock**: Claude Sonnet 4.5, Claude Haiku 4.5 模型
 - **AWS Bedrock Knowledge Base**: RAG 知识库检索增强生成
-- **AWS Bedrock Agent Core**: Memory 管理 (短期/长期记忆)
+- **AWS Bedrock AgentCore**: Memory 管理 (短期/长期记忆)
 - **boto3**: AWS Python SDK
 - **yfinance**: 股票数据获取
 - **Tavily AI**: 网络搜索引擎
