@@ -26,7 +26,7 @@ def web_search(
     base_url = "https://api.tavily.com/search"
     headers = {"Content-Type": "application/json", "Accept": "application/json"}
     payload = {
-        "api_key": "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",
+        "api_key": "",
         "query": search_query,
         "search_depth": "advanced",
         "include_images": False,

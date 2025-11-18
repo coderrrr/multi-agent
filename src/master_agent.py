@@ -20,12 +20,12 @@ REGION = os.environ.get("AWS_DEFAULT_REGION", "us-west-2")
 ACTOR_ID = "user_123"  # 用户唯一标识符
 SESSION_ID = "personal_session_001"  # 会话唯一标识符
 
-SHORT_TERM_MEMORY_NAME="short_term_memory_demo1"
-LONG_TERM_MEMORY_NAME="long_term_memory_demo1"
+SHORT_TERM_MEMORY_NAME="short_term_memory_demo2"
+LONG_TERM_MEMORY_NAME="long_term_memory_demo2"
 
 memory_client = MemoryClient(region_name=REGION)
 
-MEMORY_ID = memory_helper.create_short_term_memory(memory_client, LONG_TERM_MEMORY_NAME);
+MEMORY_ID = memory_helper.create_long_term_memory(memory_client, LONG_TERM_MEMORY_NAME);
 
 # 创建 Bedrock 模型
 # model_id="global.anthropic.claude-sonnet-4-5-20250929-v1:0",

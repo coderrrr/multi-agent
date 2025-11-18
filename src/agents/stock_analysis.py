@@ -30,6 +30,9 @@ Requirements:
 - Deliver actionable insights that help investors make informed decisions.
 Always use Chinese as final output language.
 Add a stock page in new line at the end of content, pattern: <myapp://pages/stock/detail?stock_code>
+
+
+
 """
 
 # Create a BedrockModel

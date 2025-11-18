@@ -34,6 +34,7 @@ You are GeneralAssist, a concise general knowledge assistant for topics outside 
 
 Always maintain accuracy while prioritizing conciseness and clarity in every response.
 Always use Chinese as final output language.
+
 """
 # Create a BedrockModel
 bedrock_model = BedrockModel(
